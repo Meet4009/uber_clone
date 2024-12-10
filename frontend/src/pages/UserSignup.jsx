@@ -1,11 +1,38 @@
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 export const UserSignUp = () => {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+
+    console.log(formData);
+
+    setFormData({
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+    });
+  };
+
   return (
     <div className="p-7 h-screen flex flex-col justify-between">
       <div>
         <h1 className="text-3xl font-bold mb-10">Uber</h1>
-        <form>
+        <form onSubmit={handleFormSubmit}>
           <div className="flex justify-center items-center gap-2">
             <div>
               <h3 className="text-lg font-medium mb-2">First Name:</h3>
@@ -16,6 +43,8 @@ export const UserSignUp = () => {
                 name="firstName"
                 placeholder="firstName"
                 autoComplete="off"
+                value={formData.firstName}
+                onChange={handleInputChange}
               />
             </div>
 
@@ -28,6 +57,8 @@ export const UserSignUp = () => {
                 name="lastName"
                 placeholder="lastName"
                 autoComplete="off"
+                value={formData.lastName}
+                onChange={handleInputChange}
               />
             </div>
           </div>
@@ -40,6 +71,8 @@ export const UserSignUp = () => {
             name="email"
             placeholder="email@example.com"
             autoComplete="off"
+            value={formData.email}
+            onChange={handleInputChange}
           />
           <h3 className="text-lg font-medium mb-2">Enter Password:</h3>
           <input
@@ -49,6 +82,8 @@ export const UserSignUp = () => {
             name="password"
             placeholder="password"
             autoComplete="off"
+            value={formData.password}
+            onChange={handleInputChange}
           />
           <button
             type="submit"
