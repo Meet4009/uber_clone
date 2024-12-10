@@ -2,7 +2,7 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 export const UserSignUp = () => {
-  const [formData, setFormData] = useState({
+  const [userSignupData, setUserSignupData] = useState({
     firstName: "",
     lastName: "",
     email: "",
@@ -12,15 +12,15 @@ export const UserSignUp = () => {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
 
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setUserSignupData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
 
-    console.log(formData);
+    console.log("UserSignup:", userSignupData);
 
-    setFormData({
+    setUserSignupData({
       firstName: "",
       lastName: "",
       email: "",
@@ -43,7 +43,7 @@ export const UserSignUp = () => {
                 name="firstName"
                 placeholder="firstName"
                 autoComplete="off"
-                value={formData.firstName}
+                value={userSignupData.firstName}
                 onChange={handleInputChange}
               />
             </div>
@@ -57,7 +57,7 @@ export const UserSignUp = () => {
                 name="lastName"
                 placeholder="lastName"
                 autoComplete="off"
-                value={formData.lastName}
+                value={userSignupData.lastName}
                 onChange={handleInputChange}
               />
             </div>
@@ -71,7 +71,7 @@ export const UserSignUp = () => {
             name="email"
             placeholder="email@example.com"
             autoComplete="off"
-            value={formData.email}
+            value={userSignupData.email}
             onChange={handleInputChange}
           />
           <h3 className="text-lg font-medium mb-2">Enter Password:</h3>
@@ -82,7 +82,7 @@ export const UserSignUp = () => {
             name="password"
             placeholder="password"
             autoComplete="off"
-            value={formData.password}
+            value={userSignupData.password}
             onChange={handleInputChange}
           />
           <button
@@ -103,10 +103,10 @@ export const UserSignUp = () => {
 
       <div>
         <NavLink
-          to="/captain-login"
+          to="/captain-signup"
           className="bg-[#b47821] text-white font-semibold rounded-lg flex justify-center items-center px-4 py-2 mb-3 text-lg placeholder:text-xl"
         >
-          Sign in as Captain
+          Sign up as Captain
         </NavLink>
       </div>
     </div>

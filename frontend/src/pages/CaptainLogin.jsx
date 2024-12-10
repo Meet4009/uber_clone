@@ -3,19 +3,22 @@ import { NavLink } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
 
 export const CaptainLogin = () => {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [captainLoginData, setCaptainLoginData] = useState({
+    email: "",
+    password: "",
+  });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setCaptainLoginData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
 
-    console.log(formData);
+    console.log("CaptainLogin:", captainLoginData);
 
-    setFormData({ email: "", password: "" });
+    setCaptainLoginData({ email: "", password: "" });
   };
 
   return (
@@ -33,7 +36,7 @@ export const CaptainLogin = () => {
             name="email"
             placeholder="email@example.com"
             autoComplete="off"
-            value={formData.email}
+            value={captainLoginData.email}
             onChange={handleInputChange}
           />
           <h3 className="text-lg font-medium mb-2">Enter Password:</h3>
@@ -44,7 +47,7 @@ export const CaptainLogin = () => {
             name="password"
             placeholder="password"
             autoComplete="off"
-            value={formData.password}
+            value={captainLoginData.password}
             onChange={handleInputChange}
           />
           <button

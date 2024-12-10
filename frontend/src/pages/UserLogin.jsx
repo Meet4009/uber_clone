@@ -2,19 +2,22 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 export const UserLogin = () => {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [UserLoginData, setUserLoginData] = useState({
+    email: "",
+    password: "",
+  });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setUserLoginData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
 
-    console.log(formData);
+    console.log("UserLogin:", UserLoginData);
 
-    setFormData({ email: "", password: "" });
+    setUserLoginData({ email: "", password: "" });
   };
 
   return (
@@ -30,7 +33,7 @@ export const UserLogin = () => {
             name="email"
             placeholder="email@example.com"
             autoComplete="off"
-            value={formData.email}
+            value={UserLoginData.email}
             onChange={handleInputChange}
           />
           <h3 className="text-lg font-medium mb-2">Enter Password:</h3>
@@ -41,7 +44,7 @@ export const UserLogin = () => {
             name="password"
             placeholder="password"
             autoComplete="off"
-            value={formData.password}
+            value={UserLoginData.password}
             onChange={handleInputChange}
           />
           <button
