@@ -28,7 +28,9 @@ export const CaptainLogin = () => {
           Uber <FaArrowRightLong />
         </h1>
         <form onSubmit={handleFormSubmit}>
-          <h3 className="text-lg font-medium mb-1">What&#39;s your email:</h3>
+          <h3 className="text-lg font-medium mb-1">
+            What&#39;s our Captain&#39;s email:
+          </h3>
           <input
             className="bg-[#eeeeee] rounded-lg px-4 py-2 mb-7 border-2 w-full text-base placeholder:text-base"
             type="email"

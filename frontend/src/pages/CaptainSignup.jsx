@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 export const CaptainSignUp = () => {
   const [captainSignupData, setCaptainSignupData] = useState({
-    username: {
+    fullName: {
       firstName: "",
       lastName: "",
     },
@@ -19,8 +19,8 @@ export const CaptainSignUp = () => {
       if (name === "firstName" || name === "lastName") {
         return {
           ...prev,
-          username: {
-            ...prev.username,
+          fullName: {
+            ...prev.fullName,
             [name]: value,
           },
         };
@@ -36,7 +36,7 @@ export const CaptainSignUp = () => {
     console.log("CaptainSignup:", captainSignupData);
 
     setCaptainSignupData({
-      username: {
+      fullName: {
         firstName: "",
         lastName: "",
       },
@@ -62,7 +62,7 @@ export const CaptainSignUp = () => {
                 name="firstName"
                 placeholder="firstName"
                 autoComplete="off"
-                value={captainSignupData.username.firstName}
+                value={captainSignupData.fullName.firstName}
                 onChange={handleInputChange}
               />
             </div>
@@ -76,13 +76,15 @@ export const CaptainSignUp = () => {
                 name="lastName"
                 placeholder="lastName"
                 autoComplete="off"
-                value={captainSignupData.username.lastName}
+                value={captainSignupData.fullName.lastName}
                 onChange={handleInputChange}
               />
             </div>
           </div>
 
-          <h3 className="text-lg font-medium mb-1">What&#39;s your email:</h3>
+          <h3 className="text-lg font-medium mb-1">
+            What&#39;s our Captain&#39;s email:
+          </h3>
           <input
             className="bg-[#eeeeee] rounded-lg px-4 py-2 mb-5 border-2 w-full text-base placeholder:text-base"
             type="email"

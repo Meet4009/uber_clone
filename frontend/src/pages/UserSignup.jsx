@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 export const UserSignUp = () => {
   const [userSignupData, setUserSignupData] = useState({
-    username: {
+    fullName: {
       firstName: "",
       lastName: "",
     },
@@ -18,8 +18,8 @@ export const UserSignUp = () => {
       if (name === "firstName" || name === "lastName") {
         return {
           ...prev,
-          username: {
-            ...prev.username,
+          fullName: {
+            ...prev.fullName,
             [name]: value,
           },
         };
@@ -35,7 +35,7 @@ export const UserSignUp = () => {
     console.log("UserSignup:", userSignupData);
 
     setUserSignupData({
-      username: {
+      fullName: {
         firstName: "",
         lastName: "",
       },
@@ -59,7 +59,7 @@ export const UserSignUp = () => {
                 name="firstName"
                 placeholder="firstName"
                 autoComplete="off"
-                value={userSignupData.username.firstName}
+                value={userSignupData.fullName.firstName}
                 onChange={handleInputChange}
               />
             </div>
@@ -73,7 +73,7 @@ export const UserSignUp = () => {
                 name="lastName"
                 placeholder="lastName"
                 autoComplete="off"
-                value={userSignupData.username.lastName}
+                value={userSignupData.fullName.lastName}
                 onChange={handleInputChange}
               />
             </div>
