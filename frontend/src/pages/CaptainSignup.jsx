@@ -4,8 +4,10 @@ import { NavLink } from "react-router-dom";
 
 export const CaptainSignUp = () => {
   const [captainSignupData, setCaptainSignupData] = useState({
-    firstName: "",
-    lastName: "",
+    username: {
+      firstName: "",
+      lastName: "",
+    },
     email: "",
     password: "",
   });
@@ -13,7 +15,19 @@ export const CaptainSignUp = () => {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
 
-    setCaptainSignupData((prev) => ({ ...prev, [name]: value }));
+    setCaptainSignupData((prev) => {
+      if (name === "firstName" || name === "lastName") {
+        return {
+          ...prev,
+          username: {
+            ...prev.username,
+            [name]: value,
+          },
+        };
+      } else {
+        return { ...prev, [name]: value };
+      }
+    });
   };
 
   const handleFormSubmit = (event) => {
@@ -22,8 +36,10 @@ export const CaptainSignUp = () => {
     console.log("CaptainSignup:", captainSignupData);
 
     setCaptainSignupData({
-      firstName: "",
-      lastName: "",
+      username: {
+        firstName: "",
+        lastName: "",
+      },
       email: "",
       password: "",
     });
@@ -38,37 +54,37 @@ export const CaptainSignUp = () => {
         <form onSubmit={handleFormSubmit}>
           <div className="flex justify-center items-center gap-2">
             <div>
-              <h3 className="text-lg font-medium mb-2">First Name:</h3>
+              <h3 className="text-lg font-medium mb-1">First Name:</h3>
               <input
-                className="bg-[#eeeeee] rounded-lg px-4 py-2 mb-5 border-2 w-full text-base placeholder:text-lg"
+                className="bg-[#eeeeee] rounded-lg px-4 py-2 mb-5 border-2 w-full text-base placeholder:text-base"
                 type="text"
                 required
                 name="firstName"
                 placeholder="firstName"
                 autoComplete="off"
-                value={captainSignupData.firstName}
+                value={captainSignupData.username.firstName}
                 onChange={handleInputChange}
               />
             </div>
 
             <div>
-              <h3 className="text-lg font-medium mb-2">Last Name:</h3>
+              <h3 className="text-lg font-medium mb-1">Last Name:</h3>
               <input
-                className="bg-[#eeeeee] rounded-lg px-4 py-2 mb-5 border-2 w-full text-base placeholder:text-lg"
+                className="bg-[#eeeeee] rounded-lg px-4 py-2 mb-5 border-2 w-full text-base placeholder:text-base"
                 type="text"
                 required
                 name="lastName"
                 placeholder="lastName"
                 autoComplete="off"
-                value={captainSignupData.lastName}
+                value={captainSignupData.username.lastName}
                 onChange={handleInputChange}
               />
             </div>
           </div>
 
-          <h3 className="text-lg font-medium mb-2">What&#39;s your email:</h3>
+          <h3 className="text-lg font-medium mb-1">What&#39;s your email:</h3>
           <input
-            className="bg-[#eeeeee] rounded-lg px-4 py-2 mb-5 border-2 w-full text-base placeholder:text-lg"
+            className="bg-[#eeeeee] rounded-lg px-4 py-2 mb-5 border-2 w-full text-base placeholder:text-base"
             type="email"
             required
             name="email"
@@ -77,9 +93,9 @@ export const CaptainSignUp = () => {
             value={captainSignupData.email}
             onChange={handleInputChange}
           />
-          <h3 className="text-lg font-medium mb-2">Enter Password:</h3>
+          <h3 className="text-lg font-medium mb-1">Enter Password:</h3>
           <input
-            className="bg-[#eeeeee] rounded-lg px-4 py-2 mb-5 border-2 w-full text-base placeholder:text-lg"
+            className="bg-[#eeeeee] rounded-lg px-4 py-2 mb-5 border-2 w-full text-base placeholder:text-base"
             type="password"
             required
             name="password"
@@ -90,7 +106,7 @@ export const CaptainSignUp = () => {
           />
           <button
             type="submit"
-            className="bg-[#111] text-white font-semibold rounded-lg px-4 py-2 mb-2 w-full text-lg placeholder:text-xl"
+            className="bg-[#111] text-white font-semibold rounded-lg px-4 py-2 mb-2 w-full text-lg"
           >
             Sign Up
           </button>
@@ -105,12 +121,11 @@ export const CaptainSignUp = () => {
       </div>
 
       <div>
-        <NavLink
-          to="/signup"
-          className="bg-[#c74724] text-white font-semibold rounded-lg flex justify-center items-center px-4 py-2 mb-3 text-lg placeholder:text-xl"
-        >
-          Sign up as user
-        </NavLink>
+        <p className="text-xs leading-tight">
+          By proceeding, you consent to get calls, WhatsApp or SMS message,
+          including by automated means, from Uber and its affiliates to the
+          number provided.
+        </p>
       </div>
     </div>
   );

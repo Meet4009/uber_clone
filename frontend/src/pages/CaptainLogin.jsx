@@ -28,9 +28,9 @@ export const CaptainLogin = () => {
           Uber <FaArrowRightLong />
         </h1>
         <form onSubmit={handleFormSubmit}>
-          <h3 className="text-lg font-medium mb-2">What&#39;s your email:</h3>
+          <h3 className="text-lg font-medium mb-1">What&#39;s your email:</h3>
           <input
-            className="bg-[#eeeeee] rounded-lg px-4 py-2 mb-7 border-2 w-full text-base placeholder:text-lg"
+            className="bg-[#eeeeee] rounded-lg px-4 py-2 mb-7 border-2 w-full text-base placeholder:text-base"
             type="email"
             required
             name="email"
@@ -39,9 +39,9 @@ export const CaptainLogin = () => {
             value={captainLoginData.email}
             onChange={handleInputChange}
           />
-          <h3 className="text-lg font-medium mb-2">Enter Password:</h3>
+          <h3 className="text-lg font-medium mb-1">Enter Password:</h3>
           <input
-            className="bg-[#eeeeee] rounded-lg px-4 py-2 mb-7 border-2 w-full text-base placeholder:text-lg"
+            className="bg-[#eeeeee] rounded-lg px-4 py-2 mb-7 border-2 w-full text-base placeholder:text-base"
             type="password"
             required
             name="password"
@@ -52,7 +52,7 @@ export const CaptainLogin = () => {
           />
           <button
             type="submit"
-            className="bg-[#111] text-white font-semibold rounded-lg px-4 py-2 mb-2 w-full text-lg placeholder:text-xl"
+            className="bg-[#111] text-white font-semibold rounded-lg px-4 py-2 mb-2 w-full text-lg"
           >
             Login
           </button>
