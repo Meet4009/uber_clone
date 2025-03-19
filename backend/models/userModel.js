@@ -8,10 +8,9 @@ const userSchema = new mongoose.Schema({
         firstname: {
             type: String,
             required: true,
-            unique: true,
             minlength: [3, 'First name must be at least 3 character long.']
         },
-        firstname: {
+        lastname: {
             type: String,
             // required: true,
             unique: true,
@@ -27,6 +26,7 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         require: true,
+        select:false,
     },
     socketId: {
         type: String,
