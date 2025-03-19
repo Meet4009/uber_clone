@@ -83,3 +83,77 @@ The request body must be in JSON format and include the following fields:
 -   Ensure that the `email` field is unique.
 -   Passwords are hashed before being stored in the database.
 -   A JWT token is returned upon successful registration.
+
+---
+
+# User Login Endpoint Documentation
+
+## Endpoint: `/users/login`
+
+### Method: `POST`
+
+### Description:
+
+This endpoint is used to authenticate a user and provide a JWT token upon successful login.
+
+### Request Body:
+
+The request body must be in JSON format and include the following fields:
+
+-   `email` (string, required): The email address of the user. Must be a valid email format.
+-   `password` (string, required): The password for the user. Must be at least 4 characters long.
+
+### Example Request Body:
+
+```json
+{
+    "email": "john.doe@example.com",
+    "password": "securepassword"
+}
+```
+
+### Responses:
+
+#### Success:
+
+-   **Status Code:** `200 OK`
+-   **Response Body:**
+    ```json
+    {
+        "status": true,
+        "message": "User Logged In Successfully",
+        "token": "jwtToken"
+    }
+    ```
+
+#### Validation Errors:
+
+-   **Status Code:** `400 Bad Request`
+-   **Response Body:**
+    ```json
+    {
+        "errors": [
+            {
+                "msg": "Invalid Email",
+                "param": "email",
+                "location": "body"
+            }
+        ]
+    }
+    ```
+
+#### Invalid Credentials:
+
+-   **Status Code:** `401 Unauthorized`
+-   **Response Body:**
+    ```json
+    {
+        "message": "Invalid Email or Password"
+    }
+    ```
+
+### Notes:
+
+-   Ensure the `email` exists in the database.
+-   Passwords are compared using a secure hashing algorithm.
+-   A JWT token is returned upon successful login.
