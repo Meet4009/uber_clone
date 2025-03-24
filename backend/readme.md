@@ -157,3 +157,99 @@ The request body must be in JSON format and include the following fields:
 -   Ensure the `email` exists in the database.
 -   Passwords are compared using a secure hashing algorithm.
 -   A JWT token is returned upon successful login.
+
+---
+
+# User Profile Endpoint Documentation
+
+## Endpoint: `/users/profile`
+
+### Method: `GET`
+
+### Description:
+
+This endpoint is used to retrieve the profile of the authenticated user.
+
+### Headers:
+
+-   `Authorization` (string, required): Bearer token for authentication.
+
+### Responses:
+
+#### Success:
+
+-   **Status Code:** `200 OK`
+-   **Response Body:**
+    ```json
+    {
+        "status": true,
+        "message": "User Profile",
+        "data": {
+            "_id": "userId",
+            "fullname": {
+                "firstname": "John",
+                "lastname": "Doe"
+            },
+            "email": "john.doe@example.com"
+        }
+    }
+    ```
+
+#### Unauthorized:
+
+-   **Status Code:** `401 Unauthorized`
+-   **Response Body:**
+    ```json
+    {
+        "error": "unauthorized token"
+    }
+    ```
+
+#### Not Found:
+
+-   **Status Code:** `404 Not Found`
+-   **Response Body:**
+    ```json
+    {
+        "message": "User not found"
+    }
+    ```
+
+---
+
+# User Logout Endpoint Documentation
+
+## Endpoint: `/users/logout`
+
+### Method: `GET`
+
+### Description:
+
+This endpoint is used to log out the authenticated user by clearing the token and blacklisting it.
+
+### Headers:
+
+-   `Authorization` (string, required): Bearer token for authentication.
+
+### Responses:
+
+#### Success:
+
+-   **Status Code:** `200 OK`
+-   **Response Body:**
+    ```json
+    {
+        "status": true,
+        "message": "User Logged out successfully"
+    }
+    ```
+
+#### Unauthorized:
+
+-   **Status Code:** `401 Unauthorized`
+-   **Response Body:**
+    ```json
+    {
+        "error": "unauthorized token"
+    }
+    ```

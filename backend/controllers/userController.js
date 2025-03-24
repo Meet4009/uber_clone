@@ -1,4 +1,5 @@
 const userModel = require('../models/userModel');
+const blacklistedTokenModel = require('../models/blacklistTokenModels');
 const userService = require('../services/userServices');
 const { validationResult } = require('express-validator');
 
@@ -63,9 +64,41 @@ module.exports.loginUser = async (req, res, next) => {
         });
     }
     const token = user.generateAuthToken();
+
+    res.cookie('token', token) 
+
     res.json({
         status: true,
         message: "User Logged In Successfully",
         token: token
     })
 };
+
+
+module.exports.getUserProfile = async (req, res, next) => {
+    const user = await userModel.findById(req.user.id).select('-password');
+    if (!user) {
+        return res.status(404).json({
+            message: 'User not found'
+        });
+    }
+    res.json({
+        status: true,
+        message: 'User Profile',
+        data: user
+    });
+};
+
+module.exports.logoutUser = async (req, res, next) => {
+    res.clearCookie('token');
+    const token = req.cookies.token || req.headers.authorization?.split(' ')[1];
+
+    await blacklistedTokenModel.create({ token });
+
+
+    res.json({
+        status: true,
+        message: 'User Logged out successfully'
+    });
+
+}
