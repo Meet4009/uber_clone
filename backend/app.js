@@ -5,6 +5,7 @@ const cookies = require("cookie-parser");
 
 const connectDB = require("./database/connection");
 const userRoutes = require("./routes/userRoutes");
+const captianRoutes = require("./routes/captianRoutes");
 
 dotenv.config();
 const app = express();
@@ -17,5 +18,6 @@ app.use(cookies());
 connectDB();
 
 app.use("/users", userRoutes);
+app.use("/captian", captianRoutes);
 
 module.exports = app;
