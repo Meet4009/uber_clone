@@ -5,7 +5,7 @@ module.exports.createcCaptian = async ({
     if (!firstname || !email || !password || !color || !plate || !capacity || !vehicleType) {
         throw new Error('All fields are require');
     }
-    const user = await captianModel.create({
+    const captian = await captianModel.create({
         fullname: {
             firstname,
             lastname
@@ -19,6 +19,5 @@ module.exports.createcCaptian = async ({
             vehicleType
         }
     });
-
-    return user;
+    return captian;
 }
