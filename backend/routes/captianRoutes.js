@@ -6,8 +6,6 @@ const middlewares = require("../middlewares/auth");
 
 const CaptianController = require('../controllers/captianController');
 
-////////////////////////////////
-
 Router.post('/register', [
     body('email').isEmail().withMessage('Invalid email format'),
     body('fullname.firstname').notEmpty().isLength({ min: 3 }).withMessage('Firstname is required'),
@@ -27,7 +25,5 @@ Router.post('/login', [
 Router.get('/profile', middlewares.authCaptain, CaptianController.getCaptianProfile);
 
 Router.get('/logout', middlewares.authCaptain, CaptianController.logoutCaptian);
-
-
 
 module.exports = Router;
