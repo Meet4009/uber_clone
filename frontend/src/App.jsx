@@ -1,35 +1,28 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom"; // Import the necessary functions
-import { Home } from "./pages/Home";
-import { UserLogin } from "./pages/UserLogin";
-import { UserSignUp } from "./pages/UserSignUp";
-import { CaptainLogin } from "./pages/CaptainLogin";
-import { CaptainSignUp } from "./pages/CaptainSignup";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/login",
-    element: <UserLogin />,
-  },
-  {
-    path: "/signup",
-    element: <UserSignUp />,
-  },
-  {
-    path: "/captain-login",
-    element: <CaptainLogin />,
-  },
-  {
-    path: "/captain-signup",
-    element: <CaptainSignUp />,
-  },
-]);
+import { Routes, Route } from "react-router-dom";
+import Start from "./pages/Start";
+import UserLogin from "./pages/UserLogin";
+import UserSignup from "./pages/UserSignUp";
+import CaptainLogin from "./pages/CaptainLogin";
+import CaptainSignup from "./pages/CaptainSignup";
 
-const App = () => {
-  return <RouterProvider router={router} />; // Provide the router to your app
-};
+import Home from "./pages/Home";
+
+
+
+function App() {
+    return (
+        <div>
+            <Routes>
+                <Route path="/" element={<Start />} />
+                <Route path="/login" element={<UserLogin />} />
+                <Route path="/signup" element={<UserSignup />} />
+                <Route path="/captain-login" element={<CaptainLogin />} />
+                <Route path="/captain-signup" element={<CaptainSignup />} />
+                <Route path="/home" element={<Home />} />
+            </Routes>
+        </div>
+    );
+}
 
 export default App;
