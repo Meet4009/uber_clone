@@ -16,11 +16,10 @@ function App() {
     return (
         <div>
             <Routes>
+                {/* User Routes */}
                 <Route path="/" element={<Start />} />
                 <Route path="/login" element={<UserLogin />} />
                 <Route path="/signup" element={<UserSignup />} />
-                <Route path="/captain-login" element={<CaptainLogin />} />
-                <Route path="/captain-signup" element={<CaptainSignup />} />
                 <Route
                     path="/home"
                     element={
@@ -37,6 +36,11 @@ function App() {
                         </UserProtectWarpper>
                     }
                 />
+
+                
+                {/* Captain Routes */}
+                <Route path="/captain-signup" element={<CaptainSignup />} />
+                <Route path="/captain-login" element={<CaptainLogin />} />
                 <Route
                     path="/captain-dashboard"
                     element={
