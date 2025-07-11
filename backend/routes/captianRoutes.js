@@ -13,7 +13,7 @@ Router.post('/register', [
     body('vehicle.color').notEmpty().isLength({ min: 3 }).isIn(['red', 'blue', 'white', 'black']).withMessage('Color must be red, blue, white or black'),
     body('vehicle.plate').notEmpty().isLength({ min: 3 }).withMessage('Plate must be at least 3 characters long'),
     body('vehicle.capacity').notEmpty().isInt({ min: 1 }).withMessage('Capacity must be at least 1'),
-    body('vehicle.vehicleType').notEmpty().isIn(['car', 'bus', 'bike']).withMessage('Make must be car, bus, or bike')
+    body('vehicle.vehicleType').notEmpty().isIn(['car', 'bus', 'auto', 'bike']).withMessage('Make must be car, bus, or bike')
 
 ], CaptianController.registerCaptian);
 

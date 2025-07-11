@@ -99,6 +99,7 @@ module.exports.getUserProfile = async (req, res, next) => {
 
 module.exports.logoutUser = async (req, res, next) => {
     try {
+        const user = req.user
         res.clearCookie('token');
         const token = req.cookies.token || req.headers.authorization?.split(' ')[1];
 
@@ -106,6 +107,7 @@ module.exports.logoutUser = async (req, res, next) => {
 
         res.json({
             status: true,
+            user: user.fullname,
             message: 'User Logged out successfully'
         });
     } catch (error) {

@@ -1,8 +1,11 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { UserDataContext } from "../context/UserContext";
 
 const UserSignup = () => {
-
     const updateTime = () => {
         const now = new Date();
         let hours = now.getHours();
@@ -28,24 +31,42 @@ const UserSignup = () => {
 
         return () => clearInterval(interval);
     }, []);
-
+    
     const [firstname, setFirstName] = useState("");
     const [lastname, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [userData, setUserData] = useState({});
+    // const [userData, setUserData] = useState({})
 
-    const handleSubmit = (e) => {
+    const navigate = useNavigate();
+    const { user, setUser } = React.useContext(UserDataContext);
+
+    // const first = useContext(second)
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setUserData({
+        const newUser = {
             fullname: {
                 firstname: firstname,
                 lastname: lastname,
             },
             email: email,
             password: password,
-        });
-        console.log(userData);
+        };
+        const responce = await axios.post(
+            `${import.meta.env.VITE_BASE_URL}/users/register`,
+            newUser
+        );
+
+        if (responce.status === 201) {
+            const data = responce.data;
+            setUser(data.user);
+            localStorage.setItem("token", data.token);
+            navigate("/home");
+        } else {
+            alert("Failed to register, please try again.");
+        }
+
         setEmail("");
         setPassword("");
         setFirstName("");
@@ -81,7 +102,10 @@ const UserSignup = () => {
                             <i className="fas fa-wifi text-sm"></i>
                             <i className="fas fa-battery-full text-lg"></i>
                         </div>
-                        <Link to="/" className="absolute top-[773px] left-1/2 -translate-x-1/2 w-[120px] h-[4px] bg-black rounded-full"></Link>
+                        <Link
+                            to="/"
+                            className="absolute top-[773px] left-1/2 -translate-x-1/2 w-[120px] h-[4px] bg-black rounded-full"
+                        ></Link>
                     </div>
 
                     {/*  Content Section  */}
@@ -112,6 +136,7 @@ const UserSignup = () => {
                                         onChange={(e) => {
                                             setFirstName(e.target.value);
                                         }}
+                                        autoComplete="given-name" // Added
                                     />
                                     <input
                                         type="text"
@@ -122,6 +147,7 @@ const UserSignup = () => {
                                         onChange={(e) => {
                                             setLastName(e.target.value);
                                         }}
+                                        autoComplete="family-name" // Added
                                     />
                                 </div>
                                 <h3 className="text-base mb-2 font-medium">
@@ -136,6 +162,7 @@ const UserSignup = () => {
                                     onChange={(e) => {
                                         setEmail(e.target.value);
                                     }}
+                                    autoComplete="email" // Added
                                 />
                                 <h3 className="text-base mb-2 font-medium">
                                     What&apos;s Your Password
@@ -149,6 +176,7 @@ const UserSignup = () => {
                                     onChange={(e) => {
                                         setPassword(e.target.value);
                                     }}
+                                    autoComplete="new-password" // Added
                                 />
                                 <button
                                     to="/login"
@@ -168,15 +196,12 @@ const UserSignup = () => {
                             <p className="text-[12px] mb-10 leading-tight">
                                 This site is protected by reCAPTCHA and the
                                 <span className="underline">
-                                    {" "}
-                                    Google Privacy Policy{" "}
+                                    Google Privacy Policy
                                 </span>
                                 and
                                 <span className="underline">
-                                    {" "}
-                                    Terms of Service apply
+                                    Terms of Service apply.
                                 </span>
-                                .
                             </p>
                         </div>
                     </div>

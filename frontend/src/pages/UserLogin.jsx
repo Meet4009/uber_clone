@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-
+/* eslint-disable no-unused-vars */
+import { useEffect, useState, useContext } from "react";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { UserDataContext } from "../context/UserContext";
 const UserLogin = () => {
-    // const timeNow = document.getElementById("timeNow");
-
     const updateTime = () => {
         const now = new Date();
         let hours = now.getHours();
@@ -16,12 +17,9 @@ const UserLogin = () => {
             timeNow.textContent = `${hours}:${minutes} ${ampm}`;
         }
     };
-
     setInterval(updateTime, 1000);
 
     const [lightOn, setLightOn] = useState(false);
-
-    // Toggle the light color every 1 second
     useEffect(() => {
         const interval = setInterval(() => {
             setLightOn((prev) => !prev);
@@ -32,14 +30,33 @@ const UserLogin = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [setUserData] = useState({});
+    // const [userData, setUserData] = useState({});
 
-    const handleSubmit = (e) => {
+    const { user, setUser } = useContext(UserDataContext);
+    const navigate = useNavigate(); 
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setUserData({
+
+        const userData = {
             email: email,
             password: password,
-        });
+        };
+
+        const response = await axios.post(
+            `${import.meta.env.VITE_BASE_URL}/users/login`,
+            userData
+        );
+        console.log(response);
+
+        if (response.status === 200) {
+            const data = response.data;
+            setUser(data.user);
+            localStorage.setItem("token", data.token);
+            navigate("/home");
+        } else {
+            alert("Failed to register, please try again.");
+        }
         setEmail("");
         setPassword("");
     };
@@ -73,7 +90,10 @@ const UserLogin = () => {
                             <i className="fas fa-wifi text-sm"></i>
                             <i className="fas fa-battery-full text-lg"></i>
                         </div>
-                        <Link to="/" className="absolute top-[773px] left-1/2 -translate-x-1/2 w-[120px] h-[4px] bg-black rounded-full"></Link>
+                        <Link
+                            to="/"
+                            className="absolute top-[773px] left-1/2 -translate-x-1/2 w-[120px] h-[4px] bg-black rounded-full"
+                        ></Link>
                     </div>
 
                     {/*  Content Section  */}

@@ -54,7 +54,7 @@ const captianSchema = new mongoose.Schema({
         vehicleType: {
             type: String,
             required: true,
-            enum: ['car', 'bus', 'bike'],
+            enum: ['car', 'bus', 'bike', 'auto'],
         }
     },
     location: {

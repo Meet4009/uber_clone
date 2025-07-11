@@ -34,8 +34,8 @@ The request body must be in JSON format and include the following fields:
 
 #### Success:
 
--   **Status Code:** `201 Created`
--   **Response Body:**
+**Status Code:** `201 Created`
+**Response Body:**
     ```json
     {
         "status": true,

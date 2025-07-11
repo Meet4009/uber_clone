@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { CaptainDataContext } from "../context/CaptainContext";
+import axios from "axios";
 
 const CaptainSignup = () => {
     // const timeNow = document.getElementById("timeNow");
-
+    
     const updateTime = () => {
         const now = new Date();
         let hours = now.getHours();
@@ -16,41 +18,75 @@ const CaptainSignup = () => {
             timeNow.textContent = `${hours}:${minutes} ${ampm}`;
         }
     };
-
+    
     setInterval(updateTime, 1000);
-
+    
     const [lightOn, setLightOn] = useState(false);
-
+    
     // Toggle the light color every 1 second
     useEffect(() => {
         const interval = setInterval(() => {
             setLightOn((prev) => !prev);
         }, 1000);
-
+        
         return () => clearInterval(interval);
     }, []);
-
+    const navigate = useNavigate();
+    
     const [firstname, setFirstName] = useState("");
-    const [lastname, setLastName] = useState("");
+    const [lastname, setLastName] = useState("");``
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [userData, setUserData] = useState({});
 
-    const handleSubmit = (e) => {
+    const [vehicleColor, setVehicleColor] = useState("");
+    const [vehiclePlate, setVehiclePlate] = useState("");
+    const [vehicleCapacity, setVehicleCapacity] = useState("");
+    const [vehicleType, setVehicleType] = useState("");
+
+    const { setCaptain } = React.useContext(CaptainDataContext);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setUserData({
+        const captainData = {
             fullname: {
                 firstname: firstname,
                 lastname: lastname,
             },
             email: email,
             password: password,
-        });
-        console.log(userData);
+            vehicle: {
+                color: vehicleColor,
+                plate: vehiclePlate,
+                capacity: vehicleCapacity,
+                vehicleType: vehicleType,
+            },
+        };
+
+        const response = await axios.post(
+            `${import.meta.env.VITE_BASE_URL}/captain/register`,
+            captainData
+        );
+
+        if (response.status === 201) {
+            const data = response.data;
+            console.log("Captain data:", data);
+            
+            setCaptain(data.captain);
+            localStorage.setItem("captain", data.token);
+            navigate("/captain-dashboard");
+            // resetForm();
+            // alert("Captain account created successfully!");
+        } else {
+            alert("Error creating captain account. Please try again.");
+        }
         setEmail("");
         setPassword("");
         setFirstName("");
         setLastName("");
+        setVehicleColor("");
+        setVehiclePlate("");
+        setVehicleCapacity("");
+        setVehicleType("");
     };
 
     return (
@@ -82,7 +118,10 @@ const CaptainSignup = () => {
                             <i className="fas fa-wifi text-sm"></i>
                             <i className="fas fa-battery-full text-lg"></i>
                         </div>
-                        <Link to="/" className="absolute top-[773px] left-1/2 -translate-x-1/2 w-[120px] h-[4px] bg-black rounded-full"></Link>
+                        <Link
+                            to="/"
+                            className="absolute top-[773px] left-1/2 -translate-x-1/2 w-[120px] h-[4px] bg-black rounded-full"
+                        ></Link>
                     </div>
 
                     {/*  Content Section  */}
@@ -94,12 +133,7 @@ const CaptainSignup = () => {
                                 src="/uber-driver.png"
                                 alt=""
                             />
-                            <form
-                                action=""
-                                onSubmit={(e) => {
-                                    handleSubmit(e);
-                                }}
-                            >
+                            <form action="" onSubmit={handleSubmit}>
                                 <h3 className="text-base mb-2 font-medium">
                                     What&apos;s our Captian&apos;s Name
                                 </h3>
@@ -126,7 +160,7 @@ const CaptainSignup = () => {
                                     />
                                 </div>
                                 <h3 className="text-base mb-2 font-medium">
-                                    What&apos;s our Captian&apos;s  Email
+                                    What&apos;s our Captian&apos;s Email
                                 </h3>
                                 <input
                                     type="email"
@@ -151,15 +185,71 @@ const CaptainSignup = () => {
                                         setPassword(e.target.value);
                                     }}
                                 />
+
+                                <h3 className="text-base mb-2 font-medium">
+                                    Vehicle Information
+                                </h3>
+                                <div className="flex gap-3 mb-5">
+                                    <input
+                                        type="text"
+                                        placeholder="Vehicle Color"
+                                        className="bg-[#eeeeee] w-1/2 rounded px-4 py-2 border text-base placeholder:text-sm"
+                                        required
+                                        value={vehicleColor}
+                                        onChange={(e) =>
+                                            setVehicleColor(e.target.value)
+                                        }
+                                    />
+                                    <input
+                                        type="text"
+                                        placeholder="Plate Number"
+                                        className="bg-[#eeeeee] w-1/2 rounded px-4 py-2 border text-base placeholder:text-sm"
+                                        required
+                                        value={vehiclePlate}
+                                        onChange={(e) =>
+                                            setVehiclePlate(e.target.value)
+                                        }
+                                    />
+                                </div>
+                                <div className="flex gap-3 mb-5">
+                                    <input
+                                        type="number"
+                                        min="1"
+                                        placeholder="Capacity"
+                                        className="bg-[#eeeeee] w-1/2 rounded px-4 py-2 border text-base placeholder:text-sm"
+                                        required
+                                        value={vehicleCapacity}
+                                        onChange={(e) =>
+                                            setVehicleCapacity(e.target.value)
+                                        }
+                                    />
+                                    <select
+                                        className="bg-[#eeeeee] w-1/2 rounded px-4 py-2 border text-base"
+                                        required
+                                        value={vehicleType}
+                                        onChange={(e) =>
+                                            setVehicleType(e.target.value)
+                                        }
+                                    >
+                                        <option value="">Select Type</option>
+                                        <option value="car">Car</option>
+                                        <option value="auto">Auto</option>
+                                        <option value="bike">Bike</option>
+                                        <option value="bus">Bus</option>
+                                    </select>
+                                </div>
                                 <button
-                                    to="/login"
+                                    type="submit"
                                     className="flex items-center justify-center w-full bg-black text-white py-3 rounded-lg mb-4 font-bold text-lg"
                                 >
-                                    Register
+                                    Create Captain Account
                                 </button>
                                 <p className="text-center">
-                                    Alread have a Account ?{" "}
-                                    <Link to="/captain-login" className="text-blue-500">
+                                    Already have an Account?{" "}
+                                    <Link
+                                        to="/captain-login"
+                                        className="text-blue-500"
+                                    >
                                         Login
                                     </Link>
                                 </p>
@@ -168,8 +258,16 @@ const CaptainSignup = () => {
                         <div>
                             <p className="text-[12px] mb-10 leading-tight">
                                 This site is protected by reCAPTCHA and the
-                                <span className="underline"> Google Privacy Policy </span>and<span className="underline"> Terms of Service
-                                apply</span>.
+                                <span className="underline">
+                                    {" "}
+                                    Google Privacy Policy{" "}
+                                </span>
+                                and
+                                <span className="underline">
+                                    {" "}
+                                    Terms of Service apply
+                                </span>
+                                .
                             </p>
                         </div>
                     </div>

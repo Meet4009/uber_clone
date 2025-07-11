@@ -58,13 +58,13 @@ module.exports.loginCaptian = async (req, res, next) => {
         const captain = await CaptianModel.findOne({ email }).select('+password');
         if (!captain) {
             return res.status(401).json({
-                message: 'Invalid Email or Password'
+                message: 'Invalid Email or Password. Please try again.'
             });
         }
         const isPasswordMatch = captain.comperePassword(password, captain.password);
         if (!isPasswordMatch) {
             return res.status(401).json({
-                message: 'Invalid Email or Password'
+                message: 'Invalid Email or Password. Please try again.'
             });
         }
         const token = captain.generateAuthToken();
